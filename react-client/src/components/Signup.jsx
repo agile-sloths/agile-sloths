@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Message, Segment, Input, Select } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Input, Select, Dropdown } from 'semantic-ui-react'
 
 const options = [
     { key: 'v', text: 'Voter', value: 'voter' },
@@ -15,14 +15,10 @@ class SignUpForm extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
-    handleChange() {
-        //console.log(options)
-        for (var i = 0; i < options.length; i++) {
-            console.log(options[i])
-        }
-        if (options[0] === 'voter') {
+    handleChange(e, {value}) {
+        if (value === 'voter') {
             this.setState({
-                CandidateTrue: true
+                CandidateTrue: false
             })
         } else {
             this.setState({
@@ -52,16 +48,17 @@ class SignUpForm extends React.Component {
                     <Header as='h2' color='green' textAlign='center'>
                         {' '}Sign up for an account
                     </Header>
-            
                     <Form size='large'>
                     <Segment>
                         <Form.Group widths='equal'>
                             <Form.Field required control={Input} label='Username' placeholder='Username' />
                             <Form.Field required control={Input} label='Password' placeholder='Password' />
-                            <Form.Field required control={Select} 
+                            <Form.Field required control={Dropdown}
+                                        fluid
+                                        //value={this.state.CandidateTrue} 
                                         label='Role' 
-                                        options={options} 
-                                        placeholder='Role' 
+                                        selection options={options} 
+                                        placeholder='Role'
                                         onChange={this.handleChange}/>
                         </Form.Group>
 
