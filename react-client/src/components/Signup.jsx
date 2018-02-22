@@ -29,7 +29,7 @@ class SignUpForm extends React.Component {
 
     render() {
         return (
-            <div className='signup-form'>
+            <div className='login-form'>
                 <style>{`
                 body > div,
                 body > div > div,
@@ -67,7 +67,9 @@ class SignUpForm extends React.Component {
                         { this.state.CandidateTrue && [
                             <Form.Group widths='equal' key="1">
                                 <Form.Field key="2" control={TextArea} label='Bio' placeholder='Tell us about yourself' />
+                                <Form.Field key ="3" control={Input} label='Race' placeholder='What office are you running for?'/>
                             </Form.Group>
+                            
                             ]
                         }
 
