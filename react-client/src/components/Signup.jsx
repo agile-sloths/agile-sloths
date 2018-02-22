@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Message, Segment, Input, Select, Dropdown } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Input, Select, Dropdown, TextArea } from 'semantic-ui-react'
 
 const options = [
     { key: 'v', text: 'Voter', value: 'voter' },
@@ -51,23 +51,25 @@ class SignUpForm extends React.Component {
                     <Form size='large'>
                     <Segment>
                         <Form.Group widths='equal'>
-                            <Form.Field required control={Input} label='Username' placeholder='Username' />
+                            <Form.Field required control={Input} label='Email' placeholder='Email' />
                             <Form.Field required control={Input} label='Password' placeholder='Password' />
                             <Form.Field required control={Dropdown}
                                         fluid
-                                        //value={this.state.CandidateTrue} 
                                         label='Role' 
                                         selection options={options} 
                                         placeholder='Role'
                                         onChange={this.handleChange}/>
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Field required control={Input} label='First Name' placeholder='First name' />
+                            <Form.Field required control={Input} label='Last Name' placeholder='Last name' />
+                        </Form.Group>
 
                         { this.state.CandidateTrue && [
-                        <Form.Group widths='equal' key="1">
-                            <Form.Field key="2" control={Input} label='First Name' placeholder='First name' />
-                            <Form.Field key="3" control={Input} label='Last Name' placeholder='Last name' />
-                        </Form.Group>
-                        ]
+                            <Form.Group widths='equal' key="1">
+                                <Form.Field key="2" control={TextArea} label='Bio' placeholder='Tell us about yourself' />
+                            </Form.Group>
+                            ]
                         }
 
                             <Form.Field control={Button}>Submit</Form.Field>
