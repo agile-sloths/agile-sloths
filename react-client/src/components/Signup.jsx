@@ -27,7 +27,6 @@ class SignUpForm extends React.Component {
         }
     }
 
-
     render() {
         return (
             <div className='signup-form'>
