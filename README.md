@@ -24,7 +24,12 @@
 
 ## Requirements
 
-<!-- TO BE ADDED -->
+Put the following in a config.js file located at the root of the app (unless you want to change reference):
+	module.exports = {
+	  SESSION_PASSWORD: 'CaliforniaKnowsHowToParty', <!-- change...or don't... -->
+	  GOOGLE_API_KEY: '', <!-- get your key at https://developers.google.com/civic-information/docs/using_api -->
+	  PROPUBLICA_API_KEY: '' <!-- THIS IS CURRENTLY UNUSED - get your key at https://projects.propublica.org/api-docs/congress-api/  --> 
+	}
 
 ## Development
 

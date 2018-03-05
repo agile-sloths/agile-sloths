@@ -52,7 +52,7 @@ class ConnectedCandidateInfoTab extends React.Component {
       address: {
         fontSize: '12px'
       }
-    }
+    };
     return (
       <div>
         {this.props.candidateInfo.data !== undefined // this keeps react from rendering when object is undefined, which will crash the page
@@ -96,5 +96,5 @@ let mapStateToProps = state => {
 }
 
 // this connects the component to the store, enabled by wrapping the Root with Provider. This turns the component from a "dumb component" (unaware of the store) to a "smart component"  (aware of the store)
-const CandidateInfoTab = connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectedCandidateInfoTab));
+const CandidateInfoTab = connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectedCandidateInfoTab)); // withRouter may be unncecessary as is, mainly used as a "just in case"
 export default CandidateInfoTab;

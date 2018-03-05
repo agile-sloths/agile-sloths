@@ -21,7 +21,7 @@ class ConnectedVoterInfoTab extends React.Component {
   componentWillMount() {
     // create conditional to check if user is a voter -- THAT INFO IS NOT CURRENTLY STORED IN CURRENTUSER INFO
     // if so
-      this.fetchPollingStations(this.props.savePollingInfo, '800 Brazos St Suite 500, Austin, TX 78701') //replace with currentUser location -- MUST TAKE IN AN ENTIRE ADDRESS, WHICH IS NOT CURRENTLY STORED IN CURRENTUSER INFO
+      this.fetchPollingStations(this.props.savePollingInfo, '800 Brazos St Suite 500, Austin, TX 78701'); //replace with currentUser location -- MUST TAKE IN AN ENTIRE ADDRESS, WHICH IS NOT CURRENTLY STORED IN CURRENTUSER INFO
     // else
       // do nothing
   }
@@ -30,11 +30,11 @@ class ConnectedVoterInfoTab extends React.Component {
     let location = helper.encodeRequest(address);
     axios.get(`https://www.googleapis.com/civicinfo/v2/voterinfo?key=${config.GOOGLE_API_KEY}&address=${location}`)
       .then(function (response) {
-        dispatch(response)
-        console.log('Polling info successfully updated', response.data)
+        dispatch(response);
+        console.log('Polling info successfully updated', response.data);
       })
       .catch(function (error) {
-        console.log('There was an error retrieving the polling information from the API', error)
+        console.log('There was an error retrieving the polling information from the API', error);
       })
   }
 
@@ -62,47 +62,48 @@ class ConnectedVoterInfoTab extends React.Component {
       bold: {
         fontWeight: 'bold'
       }
-    }
+    };
     return (
       <Container>
-      <Menu vertical fluid style={{overflowY: 'scroll', textAlign: 'center'}} size = 'huge'>
-      <Menu.Item>
-        <Link to='/'>
-          <Header as='h2' textAlign='center' size='huge'>
-            GRASSROOTS
-          </Header>
-        </Link>
-      </Menu.Item>
-      {this.props.pollingInfo.data 
-        ? <div> 
-            <Menu.Header>
-              <span style={ styles.header }>The <span style={ styles.biggerAndBolder }>{ location.election.name }</span> is the next election in <span style={ styles.biggerAndBolder }>{ location.normalizedInput.zip }</span>.</span>
-              <p>Polls open <span style={ styles.biggerAndBolder }>{ moment(location.election.electionDay).endOf('day').fromNow() }</span> from now on <span style={ styles.biggerAndBolder }>{ moment(location.election.electionDay).format('LL') }</span>.</p>
-              <p style={ styles.stations }> Here are your <span style={ styles.biggerAndBolder }>{ numberOfPollingStations }</span> closest voting stations:</p>
-            </Menu.Header>
-            <Divider hidden />
-            <Menu.Menu>
-              {location.pollingLocations.slice(0, numberOfPollingStations).map(location => ( // only takes in x number because there are a lot...
-                <Menu.Item key={ uuidv4() }>
-                  <Menu.Item style={ styles.locationName }>{ location.address.locationName }</Menu.Item>
-                  <Menu.Item style={ styles.address }>Open from <span style={ styles.bold }>{ helper.separateTimes(location.pollingHours)[0] }</span> to <span style={ styles.bold }>{ helper.separateTimes(location.pollingHours)[1].split('(')[0] }</span></Menu.Item>  
-                  <Menu.Item style={ styles.address }>{ location.address.line1 }</Menu.Item>
-                  <Menu.Item style={ styles.address }>{ location.address.city}, {location.address.state } { location.address.zip }</Menu.Item>
-                  <Divider fitted />
-                </Menu.Item>
-              ))}  
-            </Menu.Menu>
-          </div>
-        : <div>
-            <p>...loading your polling stations</p>
-          </div>
-      }   
-      </Menu>
+        <Menu vertical fluid style={{overflowY: 'scroll', textAlign: 'center'}} size = 'huge'>
+        <Menu.Item>
+          <Link to='/'>
+            <Header as='h2' textAlign='center' size='huge'>
+              GRASSROOTS
+            </Header>
+          </Link>
+        </Menu.Item>
+        {location
+          ? <div> 
+              <Menu.Header>
+                <span style={ styles.header }>The <span style={ styles.biggerAndBolder }>{ location.election.name }</span> is the next election in <span style={ styles.biggerAndBolder }>{ location.normalizedInput.zip }</span>.</span>
+                <p>Polls open <span style={ styles.biggerAndBolder }>{ moment(location.election.electionDay).endOf('day').fromNow() }</span> from now on <span style={ styles.biggerAndBolder }>{ moment(location.election.electionDay).format('LL') }</span>.</p>
+                <p style={ styles.stations }> Here are your <span style={ styles.biggerAndBolder }>{ numberOfPollingStations }</span> closest voting stations:</p>
+              </Menu.Header>
+              <Divider hidden />
+              <Menu.Menu>
+                {location.pollingLocations.slice(0, numberOfPollingStations).map(location => ( // only takes in x number because there are a lot...
+                  <Menu.Item key={ uuidv4() }>
+                    <Menu.Item style={ styles.locationName }>{ location.address.locationName }</Menu.Item>
+                    <Menu.Item style={ styles.address }>Open from <span style={ styles.bold }>{ helper.separateTimes(location.pollingHours)[0] }</span> to <span style={ styles.bold }>{ helper.separateTimes(location.pollingHours)[1].split('(')[0] }</span></Menu.Item>  
+                    <Menu.Item style={ styles.address }>{ location.address.line1 }</Menu.Item>
+                    <Menu.Item style={ styles.address }>{ location.address.city}, {location.address.state } { location.address.zip }</Menu.Item>
+                    <Divider fitted />
+                  </Menu.Item>
+                ))}  
+              </Menu.Menu>
+            </div>
+          : <div>
+              <p>...loading your polling stations</p>
+            </div>
+        }   
+        </Menu>
       </Container>
     )
   }
 }
 
+// Redux
 let mapDispatchToProps = dispatch => {
   return { savePollingInfo: results => dispatch(savePollingInfo(results)) };
 }
@@ -114,5 +115,6 @@ let mapStateToProps = state => {
   };
 }
 
-const VoterInfoTab = connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectedVoterInfoTab));
+// this connects the component to the store, enabled by wrapping the Root with Provider. This turns the component from a "dumb component" (unaware of the store) to a "smart component"  (aware of the store)
+const VoterInfoTab = connect(mapStateToProps, mapDispatchToProps)(withRouter(ConnectedVoterInfoTab));  // withRouter may be unncecessary as is, mainly used as a "just in case"
 export default VoterInfoTab;
