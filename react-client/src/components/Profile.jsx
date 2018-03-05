@@ -58,7 +58,6 @@ class Profile extends React.Component {
 		var followMessage;
 		this.props.favoritesfollowers && this.props.favoritesfollowers.indexOf(`${this.props.selectedUser.user.firstname} ${this.props.selectedUser.user.lastname}`) !== -1 ?
 		followMessage = 'Unfollow' : followMessage = 'Follow';
-
 		return (
 			<Container style={{paddingLeft: 210}}>
 				<Grid container style={{paddingTop: 63}}>
@@ -85,9 +84,12 @@ class Profile extends React.Component {
 						</Grid.Row>
 
 						<Grid.Row>
-							{ this.props.currentUser ?
+							{ 
+								this.props.currentUser === this.props.selectedUser.user.email ? 
+								<p> thing </p> : this.props.currentUser ?
 								<Button style={{marginTop: 20}} onClick={this.handleFollow}> {`${followMessage} ${this.props.selectedUser.user.firstname}`}</Button> :
-								null
+								null 
+
 							}
 						</Grid.Row>
 
