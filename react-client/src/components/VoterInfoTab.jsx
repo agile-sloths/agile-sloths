@@ -1,14 +1,13 @@
-import React from 'react';
-import { connect, bindActionCreators } from 'react-redux';
-import { Grid, Divider, Menu, Item, Header, Container, Segment } from 'semantic-ui-react';
-import { savePollingInfo } from '../actions/actions.js';
-import helper from '../../../lib/serverHelpers.js';
-import config from '../../../config.js';
-import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
-import uuidv4 from 'uuid';
+import { bindActionCreators, connect  } from 'react-redux';
+import config from '../../../config.js';
+import { Container, Divider, Grid, Header, Item, Menu } from 'semantic-ui-react';
+import helper from '../../../lib/serverHelpers.js';
+import { Link, withRouter } from 'react-router-dom';
 import moment from 'moment';
-
+import React from 'react';
+import { savePollingInfo } from '../actions/actions.js';
+import uuidv4 from 'uuid';
 
 class ConnectedVoterInfoTab extends React.Component {
   constructor(props) {
