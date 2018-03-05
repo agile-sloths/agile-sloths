@@ -1,12 +1,12 @@
-import React from 'react';
-import { bindActionCreators, connect } from 'react-redux';
-import { Container, Grid } from 'semantic-ui-react';
-import { saveCandidateInfo } from '../actions/actions.js';
-import helper from '../../../lib/serverHelpers.js';
-import config from '../../../config.js';
-import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { bindActionCreators, connect } from 'react-redux';
+import config from '../../../config.js';
+import { Container, Grid } from 'semantic-ui-react';
+import helper from '../../../lib/serverHelpers.js';
+import React from 'react';
+import { saveCandidateInfo } from '../actions/actions.js';
 import uuidv1 from 'uuid';
+import { withRouter } from 'react-router-dom';
 
 class ConnectedCandidateInfoTab extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class ConnectedCandidateInfoTab extends React.Component {
   }
 
   render() {
-    const searchedLocation = this.props.candidateInfo.data ? this.props.candidateInfo.data.normalizedInput : undefined;
+    const location = this.props.candidateInfo.data ? this.props.candidateInfo.data : undefined;
     const styles = {
       header: {
         fontSize: '18px'
@@ -55,9 +55,9 @@ class ConnectedCandidateInfoTab extends React.Component {
     };
     return (
       <div>
-        {this.props.candidateInfo.data !== undefined // this keeps react from rendering when object is undefined, which will crash the page
+        {location // checks if there is a location (as defined above) before iterating over an undefined object
           ? <div>
-              <p style={styles.header}>Representatives in { searchedLocation.city }, { searchedLocation.state }</p>
+              <p style={styles.header}>Representatives in { location.normalizedInput.city }, { location.normalizedInput.state }</p>
               <Grid divided='vertically'>
                 {this.props.candidateInfo.data.officials.map(candidate => (
                     <Grid.Row columns={1} key={ uuidv1() }>
