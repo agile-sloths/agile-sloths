@@ -73,7 +73,7 @@ class ConnectedVoterInfoTab extends React.Component {
             </Header>
           </Link>
         </Menu.Item>
-        {location
+        {location // checks if there is a location (as defined above) before iterating over an undefined object
           ? <div> 
               <Menu.Header>
                 <span style={ styles.header }>The <span style={ styles.biggerAndBolder }>{ location.election.name }</span> is the next election in <span style={ styles.biggerAndBolder }>{ location.normalizedInput.zip }</span>.</span>
@@ -93,7 +93,7 @@ class ConnectedVoterInfoTab extends React.Component {
                 ))}  
               </Menu.Menu>
             </div>
-          : <div>
+          : <div> {/*will only show if location is undefined. */}
               <p>...loading your polling stations</p>
             </div>
         }   
