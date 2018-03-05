@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { handleFollowAction } from '../../src/actions/actions.js';
 
-import { Icon, List, Card, Grid, Header, Container, Image, Button } from 'semantic-ui-react';
+import { Icon, List, Card, Grid, Header, Container, Image, Button, Input, Form } from 'semantic-ui-react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +18,8 @@ class Profile extends React.Component {
 		this.state = {
 			followStatus: null,
 		}
-		this.handleFollow = this.handleFollow.bind(this);
+		this.handleFollow = this.handleFollow.bind(this),
+		this.handleUploadPhoto = this.handleUploadPhoto.bind(this)
 	} 
 
 	componentWillMount() {
@@ -53,6 +54,26 @@ class Profile extends React.Component {
 
 	}
 
+	handleUploadPhoto(photoUrl) {
+		// needs to render input field for url and also submit button
+		console.log('photo submit click');
+		//post request to put url in database
+		console.log(photoUrl)
+		$.ajax({
+			type: 'POST',
+			url: '/profilepic',
+			data: JSON.stringify({id: this.props.selectedUser.user.id, url: photoUrl}), // url and user id go here
+			contentType: 'application/json',
+			success: () => {
+				// idk if it will automatically reselect the user so maybe manually add url to current user for when it rerenders
+				// put url in user object?
+			},
+			error: () => {
+				// error message
+			}
+		});
+	}
+
 	render() {
 		const user = this.props.selectedUser.user;
 		var followMessage;
@@ -84,13 +105,26 @@ class Profile extends React.Component {
 						</Grid.Row>
 
 						<Grid.Row>
+							
 							{ 
-								this.props.currentUser === this.props.selectedUser.user.email ? 
-								<p> thing </p> : this.props.currentUser ?
+								this.props.currentUser === this.props.selectedUser.user.email ? 	
+								(	
+								<Form.Group>						
+								<Form.Field style={{marginTop: 20}} control={Input} type='text' name='photoUrl' placeholder='Photo URL' /> 
+					            <Form.Field style={{marginTop: 10}} control={Button}
+	                            type='submit'
+	                            color='green'
+	                            onClick={() => {
+	                                this.handleUploadPhoto(
+	                                    $('input[name=photoUrl]').val(),
+	                                )}}>Update profile photo</Form.Field>
+	                            </Form.Group>)
+								: this.props.currentUser ?
 								<Button style={{marginTop: 20}} onClick={this.handleFollow}> {`${followMessage} ${this.props.selectedUser.user.firstname}`}</Button> :
-								null 
-
+								null
 							}
+
+
 						</Grid.Row>
 
 					</Grid.Column>
@@ -107,6 +141,7 @@ class Profile extends React.Component {
 
 	}
 }
+//<Input action='Update Profile Photo' placeholder='url' style={{marginTop: 20}}></Input>
 
 
 const mapStateToProps = state => ({

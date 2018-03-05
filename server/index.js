@@ -205,6 +205,26 @@ app.post('/races', function(req, res) {
   })
 })
 
+app.post('/profilepic', function(req, res) {
+  // req.body should have url as string, user id
+  // call helper to update database with photo url
+  db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
+    if (err) {
+      console.log('error adding profile photo on app.post');
+      res.sendStatus(201);
+    } else {
+      db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
+        if (err) {
+          console.log('add profile photo callback error');
+        } else {
+          console.log('add profile photo callback success');
+        }
+      });
+      res.sendStatus(201);
+    }
+  });
+})
+
 let port = process.env.PORT || 3000; // these process variables are for deployment because Heroku won't use port 3000
 
 app.listen(port, function() {

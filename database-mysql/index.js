@@ -299,6 +299,16 @@ var getCandidateFollowers = function(first, last, cb) {
   })
 }
 
+var addProfilePhoto = function(id, url, cb) {
+  connection.query('UPDATE users SET photo = ? WHERE id = ?', [url, id], function(err, result) {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
 module.exports.saveRace = saveRace;
 module.exports.selectAllRaces = selectAllRaces;
 module.exports.addUser = addUser;
@@ -316,3 +326,4 @@ module.exports.findVoterCandidate = findVoterCandidate;
 module.exports.getFavoritesFollowers = getFavoritesFollowers;
 module.exports.getAllRacesAndCandidates = getAllRacesAndCandidates;
 module.exports.getCandidateFollowers = getCandidateFollowers;
+module.exports.addProfilePhoto = addProfilePhoto;
