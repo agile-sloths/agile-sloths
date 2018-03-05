@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect, bindActionCreators } from 'react-redux';
-import { Grid, Container } from 'semantic-ui-react';
+import { bindActionCreators, connect } from 'react-redux';
+import { Container, Grid } from 'semantic-ui-react';
 import { saveCandidateInfo } from '../actions/actions.js';
 import helper from '../../../lib/serverHelpers.js';
 import config from '../../../config.js';
