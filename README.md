@@ -49,7 +49,8 @@ View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## To start the app
+`mysql -u root < server/schema.sql` to instantiate database (assumes you already have mySQL set up)
 
-`npm run react-dev`
+`npm run react-dev` to run webpack
 
-`npm run server-dev`
+`npm run server-dev` to start server
