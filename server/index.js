@@ -185,7 +185,8 @@ app.post('/signup', passport.authenticate('local-signup'), (req, res) => { // pa
           lastname: req.body.lastname,
           zipcode: req.body.zipcode,
           bio: req.body.bio,
-          race: req.body.race
+          race: req.body.race,
+          photo: req.body.photo
   }
   res.status(201).send(response);
 });
@@ -203,6 +204,26 @@ app.post('/races', function(req, res) {
       res.status(201).send(results);
     }
   })
+})
+
+app.post('/profilepic', function(req, res) {
+  // req.body should have url as string, user id
+  // call helper to update database with photo url
+  db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
+    if (err) {
+      console.log('error adding profile photo on app.post');
+      res.status(404).end();
+    } else {
+      db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
+        if (err) {
+          console.log('error updating profile photo');
+          res.status(404).end();
+        } else {
+          res.sendStatus(201);
+        }
+      });
+    }
+  });
 })
 
 let port = process.env.PORT || 3000; // these process variables are for deployment because Heroku won't use port 3000
