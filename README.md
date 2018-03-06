@@ -24,7 +24,12 @@
 
 ## Requirements
 
-<!-- TO BE ADDED -->
+Put the following in a config.js file located at the root of the app (unless you want to change the reference):
+	`module.exports = {
+	  SESSION_PASSWORD: 'CaliforniaKnowsHowToParty', <!-- change...or don't... -->
+	  GOOGLE_API_KEY: '', <!-- get your key at https://developers.google.com/civic-information/docs/using_api -->
+	  PROPUBLICA_API_KEY: '' <!-- THIS IS CURRENTLY UNUSED - get your key at https://projects.propublica.org/api-docs/congress-api/  --> 
+	}`
 
 ## Development
 
@@ -44,7 +49,8 @@ View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ## To start the app
+`mysql -u root < server/schema.sql` to instantiate database (assumes you already have mySQL set up)
 
-`npm run react-dev`
+`npm run react-dev` to run webpack
 
-`npm run server-dev`
+`npm run server-dev` to start server
