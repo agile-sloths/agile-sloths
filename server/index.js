@@ -185,7 +185,8 @@ app.post('/signup', passport.authenticate('local-signup'), (req, res) => { // pa
           lastname: req.body.lastname,
           zipcode: req.body.zipcode,
           bio: req.body.bio,
-          race: req.body.race
+          race: req.body.race,
+          photo: req.body.photo
   }
   res.status(201).send(response);
 });
@@ -211,16 +212,16 @@ app.post('/profilepic', function(req, res) {
   db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
     if (err) {
       console.log('error adding profile photo on app.post');
-      res.sendStatus(201);
+      res.status(404).end();
     } else {
       db.addProfilePhoto(req.body.id, req.body.url, function(err, result) {
         if (err) {
-          console.log('add profile photo callback error');
+          console.log('error updating profile photo');
+          res.status(404).end();
         } else {
-          console.log('add profile photo callback success');
+          res.sendStatus(201);
         }
       });
-      res.sendStatus(201);
     }
   });
 })

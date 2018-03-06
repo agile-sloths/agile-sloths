@@ -27,7 +27,7 @@ class Profile extends React.Component {
 		this.setState({followStatus: true}) : this.setState({followStatus: false});
 	}
 
-	handleFollow() {    
+	handleFollow() {
 		// ajax post request to add to database
 		$.ajax({
 			type: 'POST',
@@ -51,34 +51,31 @@ class Profile extends React.Component {
 				console.log('follow POST error');
 			}
 		})
-
 	}
 
 	handleUploadPhoto(photoUrl) {
-		// needs to render input field for url and also submit button
-		console.log('photo submit click');
 		//post request to put url in database
-		console.log(photoUrl)
 		$.ajax({
 			type: 'POST',
 			url: '/profilepic',
 			data: JSON.stringify({id: this.props.selectedUser.user.id, url: photoUrl}), // url and user id go here
 			contentType: 'application/json',
 			success: () => {
-				// idk if it will automatically reselect the user so maybe manually add url to current user for when it rerenders
-				// put url in user object?
+				$('#photoinput').val('');
+				$('#profilepicture').attr('src', photoUrl);
 			},
 			error: () => {
-				// error message
+				console.log('failed to update photo');
 			}
 		});
 	}
 
 	render() {
-		const user = this.props.selectedUser.user;
+		var user = this.props.selectedUser.user;
 		var followMessage;
 		this.props.favoritesfollowers && this.props.favoritesfollowers.indexOf(`${this.props.selectedUser.user.firstname} ${this.props.selectedUser.user.lastname}`) !== -1 ?
 		followMessage = 'Unfollow' : followMessage = 'Follow';
+
 		return (
 			<Container style={{paddingLeft: 210}}>
 				<Grid container style={{paddingTop: 63}}>
@@ -87,7 +84,7 @@ class Profile extends React.Component {
 					<Grid.Column width={6}>
 						<Grid.Row>
 							<Card>
-								<Image src={user.photo || 'http://lionhallattorneys.com.ng/wp-content/uploads/2015/12/empty-profile.png'}/>
+								<Image id='profilepicture' src={this.props.selectedUser.user.photo || 'http://lionhallattorneys.com.ng/wp-content/uploads/2015/12/empty-profile.png'}/>
 								<Card.Header style={{paddingLeft: 15, paddingRight: 15, fontSize: 20, paddingTop: 10, fontWeight: 800, paddingBottom: 10}}>
 									{`${user.firstname} ${user.lastname}`}
 								</Card.Header>
@@ -110,20 +107,19 @@ class Profile extends React.Component {
 								this.props.currentUser === this.props.selectedUser.user.email ? 	
 								(	
 								<Form.Group>						
-								<Form.Field style={{marginTop: 20}} control={Input} type='text' name='photoUrl' placeholder='Photo URL' /> 
+								<Form.Field id='photoinput' style={{marginTop: 20}} control={Input} type='text' name='photoUrl' placeholder='Photo URL' /> 
 					            <Form.Field style={{marginTop: 10}} control={Button}
 	                            type='submit'
 	                            color='green'
 	                            onClick={() => {
 	                                this.handleUploadPhoto(
-	                                    $('input[name=photoUrl]').val(),
+	                                    $('input[name=photoUrl]').val()
 	                                )}}>Update profile photo</Form.Field>
 	                            </Form.Group>)
 								: this.props.currentUser ?
 								<Button style={{marginTop: 20}} onClick={this.handleFollow}> {`${followMessage} ${this.props.selectedUser.user.firstname}`}</Button> :
 								null
 							}
-
 
 						</Grid.Row>
 
@@ -141,7 +137,6 @@ class Profile extends React.Component {
 
 	}
 }
-//<Input action='Update Profile Photo' placeholder='url' style={{marginTop: 20}}></Input>
 
 
 const mapStateToProps = state => ({
