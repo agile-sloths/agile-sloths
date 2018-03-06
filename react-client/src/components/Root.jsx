@@ -6,15 +6,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import App from './App.jsx';
 import reducers from '../reducers/reducers.js';
-
-// store file not currently being used.
-// Biggest difference is current version does not account for redux plugin
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    routing: routerReducer
-  }),
-);
+import store from '../store/index.js';
 
 // used to give URL history to redux
 const history = syncHistoryWithStore(createBrowserHistory(), store);
@@ -29,4 +21,4 @@ const Root = ({ store }) => (
   </Provider>
 )
 
-export default Root
+export default Root;
